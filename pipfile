@@ -10,6 +10,9 @@ matplotlib = "*"
 pandas = "*"
 ipykernel = "*"
 openpyxl = "*"
+plotly-express = "*"
+nbformat = "*"
+plotly = "*"
 
 [dev-packages]
 
