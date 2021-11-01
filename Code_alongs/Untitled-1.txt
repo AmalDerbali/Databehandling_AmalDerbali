@@ -1,0 +1,6 @@
+indikator (kpl:er)
+. hur många som ta dos 1 och dos 2
+. jämfort med förra månad/vecka
+. %total vaccinerade i landet
+. hur många vaccinerade ålder grupper
+. hur många covid19 fall på sjukhus - vaccination påverkar
