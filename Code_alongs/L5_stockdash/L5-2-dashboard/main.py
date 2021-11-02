@@ -1,10 +1,11 @@
 
 
-from dash import dcc, html
 import dash
-from load_data import StockDataLocal
-from dash.dependencies import Output, Input
 import plotly_express as px
+from dash import dcc, html
+from dash.dependencies import Input, Output
+
+from load_data import StockDataLocal
 from time_filtering import filter_time
 
 stock_data_object = StockDataLocal()
