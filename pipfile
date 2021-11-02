@@ -16,6 +16,7 @@ plotly = "*"
 lxml = "*"
 python-dotenv = "*"
 requests = "*"
+dash = "*"
 
 [dev-packages]
 
