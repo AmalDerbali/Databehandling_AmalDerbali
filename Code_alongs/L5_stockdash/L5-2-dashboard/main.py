@@ -1,11 +1,9 @@
-
-
-import dash
-import plotly_express as px
+import pandas as pd
 from dash import dcc, html
-from dash.dependencies import Input, Output
-
+import dash
 from load_data import StockDataLocal
+from dash.dependencies import Output, Input
+import plotly_express as px
 from time_filtering import filter_time
 
 stock_data_object = StockDataLocal()
@@ -48,6 +46,7 @@ app.layout = html.Div([
     Input("time-slider", "value")
 )
 def update_graph(stock, time_index):
+
     dff_daily, dff_intraday = df_dict[stock]
 
     dff = dff_intraday if time_index <= 2 else dff_daily
