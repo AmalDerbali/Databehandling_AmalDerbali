@@ -2,7 +2,7 @@
 #function based on lektion
 
 import pandas as pd
-
+df= pd.read_excel("C:/Users/Amal Derbali/Documents/GitHub/Databehandling_AmalDerbali/Lab/Covid_dashbord/Covid19_vecka.xlsx")
 class StockData:
     """Class method to get and process local stock data"""
     def __init__(self, data_path: str = "C:/Users/Amal Derbali/Documents/GitHub/Databehandling_AmalDerbali/Lab/Covid_dashbord/") -> None:
