@@ -91,7 +91,7 @@ app.layout = dbc.Container([
                         "transform": "translate(-50%, -50%)"}
                 ),
         html.Div([
-                       html.P("Number of cases per country:", 
+                       html.P("  Number of cases per country:", 
                        style={'font-size': '25px'}),
                        dcc.Graph(id="cases-world"),
                        dcc.RangeSlider(id='slider1', min=0, max= 1.698e+6, 
@@ -102,12 +102,12 @@ app.layout = dbc.Container([
                                   "display": "inline-block",
                                   "position": "absolute",
                                   "top": "310%",
-                                  "left": "0%"
+                                  "left": "1.5%"
                                   })
        
         ]),
         html.Div([
-                        html.P("Number of death per country:", 
+                        html.P("  Number of death per country:", 
                         style={'font-size': '25px'}),
                         dcc.Graph(id="death-world"),
                         dcc.RangeSlider(id='slider2', min=0, max= 1.698e+5, 
