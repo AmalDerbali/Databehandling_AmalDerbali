@@ -195,3 +195,4 @@ if __name__ == '__main__':
 #modify colors according to :https://www.sharpsightlabs.com/blog/plotly-histogram/
 #bar charts modifications based on: https://plotly.com/python/bar-charts/
 #change figure position based on :https://stackoverflow.com/questions/65662293/how-to-center-a-dash-graph
+# scatter figs is based on: https://plotly.com/python/line-and-scatter/
