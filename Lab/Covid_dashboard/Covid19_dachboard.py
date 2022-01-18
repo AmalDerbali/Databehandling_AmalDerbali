@@ -5,23 +5,8 @@ from dash import dcc, html
 from dash.dependencies import Output, Input
 import dash_bootstrap_components as dbc
 import plotly.graph_objects as go
+from Load_data import covid19_sex, covid19_region, covid19_age, vaccin_län, vaccin_ålder, world_cases_country, world_death_country
 
-
-
-
-covid19_sex = pd.read_excel("C:/Users/Amal Derbali/Documents/GitHub/Databehandling_AmalDerbali/Lab/Data/Folkhalsomyndigheten_Covid19.xlsx", sheet_name ="Totalt antal per kön")
-covid19_region = pd.read_excel("C:/Users/Amal Derbali/Documents/GitHub/Databehandling_AmalDerbali/Lab/Data/Folkhalsomyndigheten_Covid19.xlsx", sheet_name="Totalt antal per region")
-covid19_age = pd.read_excel("C:/Users/Amal Derbali/Documents/GitHub/Databehandling_AmalDerbali/Lab/Data/Folkhalsomyndigheten_Covid19.xlsx", sheet_name="Totalt antal per åldersgrupp")
-
-vaccin_df = pd.read_excel("C:/Users/Amal Derbali/Documents/GitHub/Databehandling_AmalDerbali/Lab/Data/Folkhalsomyndigheten_Covid19_Vaccine.xlsx", sheet_name="Vaccinerade kommun och ålder")
-vaccin_län = vaccin_df.groupby("Län_namn").mean().reset_index()
-vaccin_age = vaccin_df.groupby("Ålder").mean().reset_index()
-
-world_data = pd.read_excel("data/Uppgift_4_world_data.xlsx", sheet_name="Sheet1")
-world_cases = world_data[world_data["indicator"] == "cases"].reset_index(drop=True)
-world_cases_country = world_cases.groupby("country").mean().reset_index()
-world_death = world_data[world_data["indicator"] == "deaths"].reset_index(drop=True)
-world_death_country = world_death.groupby("country").mean().reset_index()
 
 
 
@@ -31,96 +16,112 @@ app = dash.Dash(__name__)
 
 #set a title based on: https://www.topcoder.com/thrive/articles/creating-interactive-dashboards-using-plotly-dash
 app.layout = dbc.Container([
-
-html.Div(
-        style = {'backgroundColor':'#111111'}, children =[
-        html.H1 (children = 'Covid 19 Statistics in Sweden',
-        style = {'textAlign':'center', 'color':'#f5fcff'}
+        html.Div(
+                style = {'backgroundColor':'#111111'}, children =[
+                html.H1 (children = 'Covid 19 Statistics in Sweden',
+                        style = {'textAlign':'center', 'color':'#f5fcff'}
                 )
             ]),
-
-html.Div(
-        style = {'backgroundColor':'#111111'}, children =[
-        html.H1 (children = 'Number of cases distribution and vaccination progress', 
-        style= {'textAlign':'center', 'color':'#f5fcff'})
+        html.Div(
+                style = {'backgroundColor':'#111111'}, children =[
+                html.H1 (children = 'Number of cases distribution and vaccination progress', 
+                         style= {'textAlign':'center', 'color':'#f5fcff'})
         ]),
-
-html.Div([
-        
-                 
-        html.P("Choose a statistic:"),
-        dcc.Dropdown(id='values', value='Totalt_antal_fall',
-                              options=[{'value': x, 'label': x} for x in ['Totalt_antal_fall','Totalt_antal_avlidna', 'Totalt_antal_intensivvårdade']],
-                 clearable=False),
-        
-        
-html.Div([
-                 
-        html.P("Number of cases based on gender:", style={'font-size': '25px'}),
-       
-        dcc.Graph(id="graph-pie"),
-             ], style= {'width':'40%', 'display':'inline-block'}),
-
-
-html.Div([
-
-         html.P("Number of cases based on region:", style={'font-size': '25px'}),
-        
-        dcc.Graph(id="graph-bar"),
-             ], style= {'width':'60%', 'display':'inline-block'})    
+        html.Div([
+                html.P("Choose a statistic:"),
+                dcc.Dropdown(id='values', value='Totalt_antal_fall',
+                              options=[{'value': x, 'label': x} 
+                              for x in ['Totalt_antal_fall','Totalt_antal_avlidna', 'Totalt_antal_intensivvårdade']]),
+        html.Div([
+                html.P("Number of cases based on gender:", 
+                       style={'font-size': '25px'}),
+                dcc.Graph(id="graph-pie")], 
+                          style= {'width':'40%', 'display':'inline-block'}),
+        html.Div([
+                html.P("Number of cases based on region:", 
+                       style={'font-size': '25px'}),
+                dcc.Graph(id="graph-bar")], 
+                          style= {'width':'60%', 'display':'inline-block'})    
         ]),
-
-html.Div([
-        html.P("Number of cases per age:", style={'font-size': '25px'}),
-
-        html.P("Choose a statistic:"),
-
-        dcc.Dropdown(id='val', value='Totalt_antal_fall',
-                     options=[{'value': x, 'label': x} 
-                     for x in ['Totalt_antal_fall','Totalt_antal_avlidna', 'Totalt_antal_intensivvårdade']]),
-
-        dcc.Graph(id="graph-histogram")],
-                  style= {'width':'70%',
+        html.Div([
+                html.P("Number of cases per age:", 
+                       style={'font-size': '25px'}),
+                html.P("Choose a statistic:"),
+                dcc.Dropdown(id='val', value='Totalt_antal_fall',
+                             options=[{'value': x, 'label': x} 
+                             for x in ['Totalt_antal_fall','Totalt_antal_avlidna', 'Totalt_antal_intensivvårdade']]),
+                dcc.Graph(id="graph-histogram")],
+                         style= {'width':'70%',
                          "height": "50px",
                          "display": "inline-block",
                          "position": "absolute",
                          "top": "115%",
                          "left": "50%",
                          "transform": "translate(-50%, -50%)"}),
-        
-dbc.Row([
-        html.P("Number of vaccinated people in Sweden:", style={'font-size': '25px'}),       
-        
-        dbc.Col(
-                html.P("Choose:"), className='m-1', xl={"size": 2, "offset": 2}),
-        
-        dbc.Col(
-                dbc.Card(
-                        dcc.RadioItems(id= 'vaccin', className='m-1',
-                        value='Län_namn',
+        dbc.Row([
+                html.P("Number of vaccinated people in Sweden:", style={'font-size': '25px'}),       
+                dbc.Col(
+                        html.P("Choose a parameter:"), className='m-1', xl={"size": 2, "offset": 2}),
+                dbc.Col(
+                        dbc.Card(
+                        dcc.RadioItems(id= 'vaccin', className='m-1', value='Län_namn',
                         options=[{'value': x, 'label': x} for x in ['Län_namn','Ålder']]
                         )) 
                     
                 ),
-                dcc.Graph(id="graph-bar-vaccin")], style= {'width':'70%',
-                         "height": "50px",
-                         "display": "inline-block",
-                         "position": "absolute",
-                         "top": "200%",
-                         "left": "50%",
-                         "transform": "translate(-50%, -50%)"}),
-
-html.Div(
-        style = {'backgroundColor':'#111111'}, children =[
-        html.H1 (children = 'Covid 19 World Statistics',
-        style = {'textAlign':'center', 'color':'#f5fcff'}
-                )
-            ]),
-
-
-])
+                        dcc.Graph(id="graph-bar-vaccin")], 
+                                  style= {'width':'70%',
+                                  "height": "50px",
+                                  "display": "inline-block",
+                                  "position": "absolute",
+                                  "top": "200%",
+                                  "left": "50%",
+                                  "transform": "translate(-50%, -50%)"}
+                                ),
+        html.Div([
+                        html.H1 (children = 'Covid 19 World Statistics',
+                        style = {'backgroundColor':'#111111',
+                        "textAlign":"center", 
+                         "color":"#f5fcff",
+                        "height": "50px",
+                        "display": "inline-block",
+                        "position": "absolute",
+                        "top": "300%",
+                        "left": "50%",
+                        "transform": "translate(-50%, -50%)"}
+                ),
+        html.Div([
+                       html.P("Number of cases per country:", 
+                       style={'font-size': '25px'}),
+                       dcc.Graph(id="cases-world"),
+                       dcc.RangeSlider(id='slider1', min=0, max= 1.698e+6, 
+                                        step=10, marks={0:'0', 1.698e+6: '1.698e+6'},
+                                        value= [1, 1.698e+6])
+                                        ], style= {"width":"50%",
+                                   "height": "50px",
+                                  "display": "inline-block",
+                                  "position": "absolute",
+                                  "top": "310%",
+                                  "left": "0%"
+                                  })
        
-        
+        ]),
+        html.Div([
+                        html.P("Number of death per country:", 
+                        style={'font-size': '25px'}),
+                        dcc.Graph(id="death-world"),
+                        dcc.RangeSlider(id='slider2', min=0, max= 1.698e+5, 
+                                        step=10, marks={0:'0', 1.698e+5: '1.698e+5'},
+                                        value= [0, 1.698e+5])
+                                        ], style= {"width":"50%",
+                                   "height": "50px",
+                                  "display": "inline-block",
+                                  "position": "absolute",
+                                  "top": "310%",
+                                  "left": "50%"
+                                  
+                                        })
+])
 
 
 
@@ -155,13 +156,36 @@ def histogram(val):
 def bar_vaccin(vaccin):
     fig4 = px.bar(vaccin_län, x= "Län_namn", y=["Andel minst 1 dos", "Andel färdigvaccinerade"],
                   color_discrete_sequence=px.colors.sequential.Inferno, barmode="group")
-    fig5 = px.bar(vaccin_age, x= "Ålder", y=["Andel minst 1 dos", "Andel färdigvaccinerade"],
+    fig5 = px.bar(vaccin_ålder, x= "Ålder", y=["Andel minst 1 dos", "Andel färdigvaccinerade"],
                   color_discrete_sequence=px.colors.sequential.Inferno, barmode="group")
     if vaccin=="Län_namn":
             return fig4
     if vaccin=="Ålder":
             return fig5
 
+
+
+
+@app.callback(Output("cases-world", "figure"),
+              Input("slider1", "value"))
+
+def world_cases(slider1):
+        low, high = slider1
+        mask= (world_cases_country['cumulative_count'] > low) & (world_cases_country['cumulative_count'] > high)
+        fig6= px.scatter(world_cases_country[mask], x="cumulative_count", y="country",
+        color="country", size='cumulative_count', hover_data=['cumulative_count'])
+        return fig6
+
+
+@app.callback(Output("death-world", "figure"),
+              Input("slider2", "value"))
+
+def world_death(slider2):
+        low, high = slider2
+        mask= (world_death_country['cumulative_count'] > low) & (world_death_country['cumulative_count'] > high)
+        fig7= px.scatter(world_death_country[mask], x="cumulative_count", y="country",
+        color="country", size='cumulative_count', hover_data=['cumulative_count'])
+        return fig7
 
 
 if __name__ == '__main__':
