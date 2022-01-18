@@ -1,4 +1,5 @@
 import pandas as pd
+import plotly_express as px
 
 
 covid19_sex = pd.read_excel("C:/Users/Amal Derbali/Documents/GitHub/Databehandling_AmalDerbali/Lab/Data/Folkhalsomyndigheten_Covid19.xlsx", sheet_name ="Totalt antal per kön")
@@ -14,3 +15,4 @@ world_cases = world_data[world_data["indicator"] == "cases"].reset_index(drop=Tr
 world_cases_country = world_cases.groupby("country").mean().reset_index()
 world_death = world_data[world_data["indicator"] == "deaths"].reset_index(drop=True)
 world_death_country = world_death.groupby("country").mean().reset_index()
+world_death_country.head()
