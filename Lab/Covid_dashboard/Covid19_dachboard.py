@@ -74,7 +74,7 @@ app.layout = dbc.Container([
                                   "height": "50px",
                                   "display": "inline-block",
                                   "position": "absolute",
-                                  "top": "200%",
+                                  "top": "210%",
                                   "left": "50%",
                                   "transform": "translate(-50%, -50%)"}
                                 ),

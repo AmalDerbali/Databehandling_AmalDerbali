@@ -1,5 +1,5 @@
 import pandas as pd
-import plotly_express as px
+
 
 
 covid19_sex = pd.read_excel("C:/Users/Amal Derbali/Documents/GitHub/Databehandling_AmalDerbali/Lab/Data/Folkhalsomyndigheten_Covid19.xlsx", sheet_name ="Totalt antal per kön")
