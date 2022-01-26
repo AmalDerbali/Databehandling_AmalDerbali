@@ -48,7 +48,7 @@ app.layout = dbc.Container([
                 dcc.Graph(id="graph-bar")], 
                           style= {'width':'60%', 'display':'inline-block'})    
         ]),
-        #start fig2
+        #start fig3
         html.Div([
                 html.P("Number of cases per age:", 
                        style={'font-size': '25px'}),
@@ -64,7 +64,7 @@ app.layout = dbc.Container([
                          "top": "115%",
                          "left": "50%",
                          "transform": "translate(-50%, -50%)"}),
-        #start fig3
+        #start fig4
         dbc.Row([
                 html.P("Number of vaccinated people in Sweden:", style={'font-size': '25px'}),       
                 dbc.Col(
@@ -100,7 +100,7 @@ app.layout = dbc.Container([
                         "transform": "translate(-50%, -50%)"}
                 ),
         html.Div([
-                #set subtitle1
+                #set subtitle1 and fig5
                        html.P("  Number of cases per country:", 
                        style={'font-size': '25px'}),
                        dcc.Graph(id="cases-world"),
@@ -117,7 +117,7 @@ app.layout = dbc.Container([
        
         ]),
         html.Div([
-                #set subtitle2
+                #set subtitle2 and fig6
                         html.P("  Number of death per country:", 
                         style={'font-size': '25px'}),
                         dcc.Graph(id="death-world"),
@@ -186,7 +186,7 @@ def bar_vaccin(vaccin):
 #scatter figs is based on: https://plotly.com/python/line-and-scatter/
 def world_cases(slider1):
         low, high = slider1
-        stat= (world_cases_country['cumulative_count'] > low) & (world_cases_country['cumulative_count'] > high)
+        stat= (world_cases_country['cumulative_count'] > low) & (world_cases_country['cumulative_count'] < high)
         fig6= px.scatter(world_cases_country[stat], x="cumulative_count", y="country",
         color="country", size='cumulative_count', hover_data=['cumulative_count'])
         return fig6
@@ -197,7 +197,7 @@ def world_cases(slider1):
 
 def world_death(slider2):
         low, high = slider2
-        stat= (world_death_country['cumulative_count'] > low) & (world_death_country['cumulative_count'] > high)
+        stat= (world_death_country['cumulative_count'] > low) & (world_death_country['cumulative_count'] < high)
         fig7= px.scatter(world_death_country[stat], x="cumulative_count", y="country",
         color="country", size='cumulative_count', hover_data=['cumulative_count'])
         return fig7
