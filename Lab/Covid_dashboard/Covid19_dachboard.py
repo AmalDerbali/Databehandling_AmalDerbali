@@ -48,7 +48,8 @@ app.layout = dbc.Container([
                 dcc.Graph(id="graph-bar")], 
                           style= {'width':'60%', 'display':'inline-block'})    
         ]),
-        #start fig3
+        #start fig3 
+        #change figure position based on :https://stackoverflow.com/questions/65662293/how-to-center-a-dash-graph
         html.Div([
                 html.P("Number of cases per age:", 
                        style={'font-size': '25px'}),
@@ -158,7 +159,6 @@ def bar_chart(values):
 @app.callback(Output("graph-histogram", "figure"),
               Input("val", "value"))
 
-#change figure position based on :https://stackoverflow.com/questions/65662293/how-to-center-a-dash-graph
 def line(val):
         fig3= px.line(covid19_age, x="Åldersgrupp", y=val,
         color_discrete_sequence=px.colors.sequential.Rainbow)
